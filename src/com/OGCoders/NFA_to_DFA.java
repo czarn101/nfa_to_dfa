@@ -40,6 +40,8 @@ public class NFA_to_DFA {
 
     private ArrayList<ArrayList<Integer>> buildPowerSet(Integer[] _nfaStates) {
 
+        System.out.println(_nfaStates.toString());
+
         ArrayList<ArrayList<Integer>> output = new ArrayList<ArrayList<Integer>>();
 
         for (int i = 1; i < Math.pow(2, _nfaStates.length); ++i) {
@@ -50,9 +52,10 @@ public class NFA_to_DFA {
 
             ArrayList<Integer> subOutput = new ArrayList<Integer>();
 
-            for (int j = 0; j < binaryForm.length; ++j) {
+            for (int j = 1; j <= binaryForm.length; ++j) {
                 if (binaryForm[j] == '1') {
-                    subOutput.add(_nfaStates[j]);
+                    System.out.println(Integer.toString(binaryForm.length - j));
+                    subOutput.add(_nfaStates[binaryForm.length - j]);
                 }
             }
             output.add(subOutput);
