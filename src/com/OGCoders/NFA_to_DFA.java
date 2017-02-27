@@ -1,3 +1,4 @@
+package com.OGCoders;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class NFA_to_DFA {
     private ArrayList<ArrayList<Integer>> dfaStates;
 
 
-    public NFA_to_DFA(Integer[] _nfaStates, String[] _alphabet, Integer _nfaStartState, Integer[] _nfaAcceptStates, String[] _nfaTransitions;) {
+    public NFA_to_DFA(Integer[] _nfaStates, String[] _alphabet, Integer _nfaStartState, Integer[] _nfaAcceptStates, String[] _nfaTransitions) {
         this.nfaStates = _nfaStates;
         this.alphabet = _alphabet;
         this.nfaStartState = _nfaStartState;
@@ -33,6 +34,7 @@ public class NFA_to_DFA {
 
     public void convert() {
         dfaStates = buildPowerSet(nfaStates);
+        System.out.println(dfaStates.toString());
 
     }
 
@@ -40,7 +42,7 @@ public class NFA_to_DFA {
 
         ArrayList<ArrayList<Integer>> output = new ArrayList<ArrayList<Integer>>();
 
-        for (int i = 1; i < 2**(_nfaStates.length); ++i) {
+        for (int i = 1; i < Math.pow(2, _nfaStates.length); ++i) {
 
             char[] binaryForm = Integer.toBinaryString(i).toCharArray();
 
@@ -48,9 +50,9 @@ public class NFA_to_DFA {
 
             ArrayList<Integer> subOutput = new ArrayList<Integer>();
 
-            for (int i = 0; i < binaryString.length; ++i) {
-                if (binaryForm[i] == '1') {
-                    subOutput.add(_nfaStates[i]);
+            for (int j = 0; j < binaryForm.length; ++j) {
+                if (binaryForm[j] == '1') {
+                    subOutput.add(_nfaStates[j]);
                 }
             }
             output.add(subOutput);
