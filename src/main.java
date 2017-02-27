@@ -16,6 +16,10 @@ public class main {
         String fileName = input.nextLine();
 
         FileHandler handler = new FileHandler(fileName);
-        Object obj = handler.getContents();
+        NFA nfa = handler.getContents();
+
+        NVA_to_DFA converter = new NFA_to_DFA(nfa);
+
+        converter.convert();
     }
 }

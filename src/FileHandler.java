@@ -11,7 +11,7 @@ public class FileHandler {
         this.fileName = fName;
     }
 
-    public Object getContents(){
+    public NFA getContents(){
 
         NFA nfaContents = null;
         try{
