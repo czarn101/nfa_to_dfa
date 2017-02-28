@@ -49,7 +49,7 @@ public class NFA_to_DFA {
         dfaStates = buildPowerSet(nfaStates);
         nfaTransitionsPrepd = prepareTransitions(nfaTransitions);
         dfaStartStates = epsilonClose(nfaStartState, nfaTransitionsPrepd);
-        
+
     }
 
     private ArrayList<ArrayList<Integer>> buildPowerSet(Integer[] _nfaStates) {
@@ -91,11 +91,10 @@ public class NFA_to_DFA {
 
     private Integer[] epsilonClose(Integer _nfaState, ArrayList<HashMap<String, String>> _nfaTransitions) {
         ArrayList<Integer> output = new ArrayList<Integer>();
+        output.add(_nfaState);
         for (int i = 0; i < _nfaTransitions.size(); ++i) {
-            if (_nfaTransitions.get(i).get("value") == "EPS") {
-                output.add(i);
-            } else if (_nfaTransitions.get(i).get("value") == _nfaState.toString()) {
-                output.add(i);
+            if (_nfaTransitions.get(i).get("value").equals("EPS")) {
+                output.add(Integer.parseInt(_nfaTransitions.get(i).get("destination")));
             }
         }
         Integer[] stockArr = new Integer[output.size()];
