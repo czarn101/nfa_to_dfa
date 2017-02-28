@@ -1,5 +1,6 @@
 package com.OGCoders;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -18,5 +19,6 @@ public class Main {
         NFA_to_DFA converter = new NFA_to_DFA(nfa);
 
         converter.convert();
+
     }
 }
