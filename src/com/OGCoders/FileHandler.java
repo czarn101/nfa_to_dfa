@@ -6,6 +6,7 @@ package com.OGCoders;
 
 import java.io.*;
 import java.util.*;
+
 public class FileHandler {
 
     private String fileName;
@@ -14,7 +15,7 @@ public class FileHandler {
         this.fileName = fName;
     }
 
-    public NFA getContents(){
+    public NFA getContents() throws FileNotFoundException {
 
         NFA nfaContents = null;
         try{
@@ -52,11 +53,9 @@ public class FileHandler {
             }
             Integer[] startState = (Integer[])list2.toArray(new Integer[list2.size()]);
 
-
-
             //fourth line
             String fourthLine = br.readLine();
-            String[] tempFourth = thirdLine.split("\\{|\\}",-1);
+            String[] tempFourth = fourthLine.split("\\{|\\}",-1);
             List<Integer> list3 = new ArrayList<Integer>();
 
             for(String s : tempFourth){
@@ -64,6 +63,7 @@ public class FileHandler {
                     list3.add(Integer.parseInt(s));
                 }
             }
+            //System.out.println("AA: "+ list3.toString());
             Integer[] setOfAcceptStates = (Integer[])list3.toArray(new Integer[list3.size()]);
 
             String fileLine = null;
@@ -84,7 +84,7 @@ public class FileHandler {
 
 
         }catch(FileNotFoundException e){
-            e.printStackTrace();
+            throw e;
         }catch(IOException e){
             e.printStackTrace();
         }
