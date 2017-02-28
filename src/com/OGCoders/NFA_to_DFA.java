@@ -17,6 +17,8 @@ public class NFA_to_DFA {
 
     public ArrayList<ArrayList<Integer>> dfaStates;
     public ArrayList<HashMap<String, String>> nfaTransitionsPrepd;
+    public ArrayList<HashMap<String, ArrayList>> dfaTransitions;
+    public Integer[] dfaStartStates;
 
 
     public NFA_to_DFA(Integer[] _nfaStates, String[] _alphabet, Integer _nfaStartState, Integer[] _nfaAcceptStates, String[] _nfaTransitions) {
@@ -46,7 +48,8 @@ public class NFA_to_DFA {
     public void convert() {
         dfaStates = buildPowerSet(nfaStates);
         nfaTransitionsPrepd = prepareTransitions(nfaTransitions);
-
+        dfaStartStates = epsilonClose(nfaStartState, nfaTransitionsPrepd);
+        
     }
 
     private ArrayList<ArrayList<Integer>> buildPowerSet(Integer[] _nfaStates) {
@@ -60,7 +63,7 @@ public class NFA_to_DFA {
             ArrayList<Integer> subOutput = new ArrayList<Integer>();
 
             for (int j = 0; j < binaryForm.length; ++j) {                       // iterate through binaryForm,
-                if (binaryForm[j] == '1') {                                     // use binary index as index hash map for power set
+                if (binaryForm[j] == '1') {                                     // use binary string as index map for creating power set
                     subOutput.add(_nfaStates[(_nfaStates.length - binaryForm.length) + j]);
                 }
             }
@@ -72,8 +75,32 @@ public class NFA_to_DFA {
     private ArrayList<HashMap<String, String>> prepareTransitions(String[] _transitions) {
         ArrayList<HashMap<String, String>> output = new ArrayList<HashMap<String, String>>();
         for (int i = 0; i < _transitions.length; ++i) {
-
+            String curr = _transitions[i];
+            String[] split = curr.split("\\s");
+            String state = split[0].replaceAll("[^0-9]","");
+            String value = split[1];
+            String destination = split[3].replaceAll("[^0-9]","");
+            HashMap<String, String> temp = new HashMap<String, String>(3);
+            temp.put("state", state);
+            temp.put("value", value);
+            temp.put("destination", destination);
+            output.add(temp);
         }
         return output;
     }
+
+    private Integer[] epsilonClose(Integer _nfaState, ArrayList<HashMap<String, String>> _nfaTransitions) {
+        ArrayList<Integer> output = new ArrayList<Integer>();
+        for (int i = 0; i < _nfaTransitions.size(); ++i) {
+            if (_nfaTransitions.get(i).get("value") == "EPS") {
+                output.add(i);
+            } else if (_nfaTransitions.get(i).get("value") == _nfaState.toString()) {
+                output.add(i);
+            }
+        }
+        Integer[] stockArr = new Integer[output.size()];
+        stockArr = output.toArray(stockArr);
+        return stockArr;
+    }
+
 }
